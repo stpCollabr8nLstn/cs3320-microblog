@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=display-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %} - Microblog</title>
+  {# Load stylesheets, from CDN (Pure, Font Awesome) and our static resources #}
+  <link href="https://cdn.jsdelivr.net/pure/0.6.0/pure-min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/pure/0.6.0/grids-responsive-min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+  {# Load the JavaScript libraries that we use #}
+  <script src="https://cdn.jsdelivr.net/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/mustache.js/2.2.1/mustache.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/socket.io-client/1.3.2/socket.io.min.js"></script>
+  {# Set up JS information from the server - CSRF token, user ID, etc. #}
+  <script>
+    var csrfToken = '{{ session.csrf_token }}'
+    var baseUrl = '{{ request.url_root }}'
+    {% if g.user %}
+    var authUserId = {{ g.user.id }}
+    {% endif %}
+  </script>
+</head>
+<body>
+<main>
+    <div id="shell" class="pure-g">
+        <header class="pure-u-1">
+            <h1><a href="/">microblog</a></h1>
+            <nav class="pure-u-1 pure-menu pure-menu-horizontal">
+                <div>
+                    <ul class="pure-menu-list">
+                        {% if g.user %}
+                            <li class="pure-menu-item"><a href="/all_users" class="pure-menu-link">users</a></li>
+                            <li class="pure-menu-item"><a href="/user/{{ g.user.id }}" class="pure-menu-link">my blog</a></li>
+                            <li class="pure-menu-item"><a href="/edit_user/{{ g.user.id }}" class="pure-menu-link">edit profile</a></li>
+                            <li class="pure-menu-item"><a href="/logout?url={{ request.path }}" class="pure-menu-link">log out</a></li>
+                        {% else %}
+                            <li class="pure-menu-item"><a href="/all_users" class="pure-menu-link">users</a></li>
+                            <li class="pure-menu-item"><a href="/login" class="pure-menu-link">log in</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div id="main" class="main pure-u-1 pure-u-md-17-24">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+</main>
+</body>
+</html>

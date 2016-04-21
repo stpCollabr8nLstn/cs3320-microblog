@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Edit {{ user.login }}{% endblock %}
+{% block content %}
+    {% if g.user %}
+        <img class="user-avatar" src="https://www.gravatar.com/avatar/{{ user.grav_hash }}">
+        <div id="user-info">
+            <h2>{{ user.login }}</h2>
+        </div>
+            <form action="{{ url_for('handle_update') }}" method="post" class="pure-form pure-form-stacked">
+                <fieldset>
+                    <input type="hidden" name="_csrf_token" value="{{ session.csrf_token }}">
+                    <input type="hidden" name="init_id" value="{{ user.id }}">
+
+                    <p><em>Note: To change your avatar update your email below or visit
+                    <a href="https://en.gravatar.com/" target="_blank">Gravatar</a></em></p>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" value="{{ user.email }}" required>
+
+                    <label for="location">Location</label>
+                    <input id="location" name="location" type="text" maxlength="40" placeholder="Where are ya from?">
+
+                    <label for="short_bio">Bio</label>
+                    <textarea id="short_bio" name="short_bio" maxlength="300" placeholder="Tell us about yourself"></textarea>
+
+                    <button type="submit" class="pure-button pure-button-primary">Update</button>
+                </fieldset>
+            </form>
+    {% endif %}
+{% endblock %}

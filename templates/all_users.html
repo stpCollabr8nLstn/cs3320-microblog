@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Users{% endblock %}
+{% block content %}
+
+    {% for user in user_list %}
+        <fieldset>
+            <img class="user-page-avatar" src="https://www.gravatar.com/avatar/{{ user.grav_hash }}">
+            <a href="/user/{{ user.id }}">{{ user.login }}</a>
+        </fieldset>
+    {% endfor %}
+
+{% endblock %}

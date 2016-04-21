@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <fieldset>
+        {{ post.content }}
+    </fieldset>
+
+    {# Load the JavaScript for the reply timeline #}
+    <!-- <script src="{{ url_for('static', filename='timeline.js') }}"></script> -->
+{% endblock %}

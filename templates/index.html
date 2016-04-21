@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    {% if not g.user %}
+    {# What the logged out/unregistered user sees #}
+        <h1>Welcome!</h1>
+        <h2>New Here?</h2>
+        <a href="/login" class="pure-button pure-button-primary">Create Account</a>
+        <h2>Recent Posts</h2>
+        {% for post in recent_posts %}
+            <fieldset>
+                <legend>{{ post.timestamp }}</legend>
+                {{ post.content|urlize(40, true) }}
+                {% if post.photo %}
+                    <img class="photo" src="{{ url_for('show_photo', post_id=post.id) }}">
+                {% endif %}
+                <br><br>
+                <img class="index-avatar" src="https://www.gravatar.com/avatar/{{ post.creator.grav_hash }}">
+                <a href="/user/{{ post.creator_id }}">{{ post.creator.login }}</a>
+            </fieldset>
+        {% endfor %}
+        <br>
+    {% else %}
+    {# What the logged in user sees #}
+        <h1>Welcome, {{ g.user.login }}!</h1>
+        <h2>Recent Posts</h2>
+        {% for post in recent_posts %}
+            {# Only show posts of pple they follow #}
+            {% set user = post.creator %}
+            {% set follow = g.user.follow_state(user.id) %}
+            {% if follow == 'following' or follow == 'self' %}
+
+            <fieldset>
+                <legend>{{ post.timestamp }}</legend>
+                {{ post.content|urlize(40, true) }}
+                {% if post.photo %}
+                    <img class="photo" src="{{ url_for('show_photo', post_id=post.id) }}">
+                {% endif %}
+                <br><br>
+                <img class="index-avatar" src="https://www.gravatar.com/avatar/{{ post.creator.grav_hash }}">
+                <a href="/user/{{ post.creator_id }}">{{ post.creator.login }}</a>
+            </fieldset>
+            {% endif %}
+        {% endfor %}
+        <br>
+    {% endif %}
+
+{% endblock %}

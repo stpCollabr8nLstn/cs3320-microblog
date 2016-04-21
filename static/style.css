@@ -1,0 +1,143 @@
+html {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14pt;
+    color: #484848;
+}
+
+a:visited, a:active, a:link{
+    color: #484848;
+}
+
+a:hover {
+    color: #ff9966;
+}
+
+a.pure-menu-link:hover {
+    background-color: #484848;
+    border-radius: 5px;
+}
+
+header {
+    background-color: #ffddcc;
+    padding-bottom: 5px;
+}
+
+header h1 {
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: center;
+}
+
+header h1 a:hover, header h1 a:visited, header h1 a:active, header h1 a:link{
+    text-decoration: none;
+    color: #484848 ;
+}
+
+header hr {
+    width: 75%;
+}
+
+nav div {
+    margin: auto;
+    width: 32%;
+}
+
+img.index-avatar {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+}
+
+img.user-avatar {
+    position: relative;
+    top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+#user-info {
+    position: relative;
+    right: 60px;
+    width: 80%;
+    float: right;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+h1, h2, h3 {
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+fieldset {
+    padding: 12px 20px;
+    border: 1px solid white;
+    border-radius: 5px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+legend {
+    background-color: #ffddcc;
+    padding: 0.2em 0.5em;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: #484848 ;
+    font-size:90%;
+    text-align:right;
+}
+
+.note {
+    font-size: 1em;
+}
+
+.photo {
+    max-width: 300px;
+    display: block;
+    margin: auto;
+}
+
+input[type=email]#email, input[type=text]#location {
+    width: 35%;
+
+}
+
+.main {
+    padding-left: 16%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font-size: 75%;
+}
+
+.pure-button {
+    border-radius: 5pt;
+}
+
+.pure-button-primary, a.pure-button-primary {
+    background-color: #484848 ;
+    color: white;
+}
+
+.login-page {
+    padding-left: 20%;
+}
+
+@media screen and (max-width: 48em) {
+    nav div {
+        margin: 0;
+    }
+
+    .main {
+        padding-left: 5%;
+    }
+}
+

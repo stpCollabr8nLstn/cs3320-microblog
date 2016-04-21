@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}{{ user.login }}{% endblock %}
+{% block content %}
+    <div id="profile-shell" data-user-id="{{ user.id }}">
+            <img class="user-avatar" src="https://www.gravatar.com/avatar/{{ user.grav_hash }}">
+
+    <div id="user-info">
+        <h1>User {{ user.login }}</h1>
+        <h2>Location: {{ user.location }}</h2>
+    </div>
+        <h3>Bio: {{ user.short_bio }}</h3>
+
+    {% if g.user %}
+        {% set state = g.user.follow_state(user.id) %}
+            {# Follow button default state is hidden
+            {# data-state will trigger js action to display button #}
+            <button class="follow pure-button" data-state="{{ state }}" hidden>Follow</button>
+        {% if g.user.id == user.id %}
+            {# hide the form on other user pages #}
+            <form method="post" enctype="multipart/form-data" action="{{ url_for('handle_post') }}"
+                  class="pure_form pure-form-stacked">
+            <fieldset>
+                <input type="hidden" name="_csrf_token" value="{{ session.csrf_token }}">
+                <input type="hidden" name="creator_id" value="{{ user.id }}">
+                <input type="hidden" name="init_id" value="{{ user.id }}">
+                <label for="content">Penny for your thoughts:</label>
+                <textarea name="content" maxlength="256" required id="content" class="pure-input-1-2 new-post"></textarea>
+                <br>
+                <label for="image">Picture (optional):</label>
+                <input type="file" accept="image/*" name="image">
+                <br>
+                <button type="submit" class="new-post pure-button pure-button-primary">Post</button>
+            </fieldset>
+            </form>
+        {% endif %}
+    {% else %}
+        <p>You must <a href="/login">log in</a> to follow this user.</p>
+    {% endif %}
+
+    <br>
+    {% for post in user_posts %}
+        <fieldset>
+            <legend>{{ post.timestamp }}</legend>
+            {{ post.content|urlize(40, true) }}
+            {% if post.photo %}
+                <img class="photo" src="{{ url_for('show_photo', post_id=post.id) }}">
+            {% endif %}
+            <br><br>
+            <img class="index-avatar" src="https://www.gravatar.com/avatar/{{ post.creator.grav_hash }}">
+            <a href="/user/{{ post.creator_id }}">{{ post.creator.login }}</a>
+        </fieldset>
+    {% endfor %}
+    <br>
+    </div>
+    <script src="{{ url_for('static', filename='userpage.js') }}" async></script>
+{% endblock %}
